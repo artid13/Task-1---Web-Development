@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task - Front End Web Designing</title>
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      width: 400px;
+      height: 200px;
+      background-color: black;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin: 10px;
+      position: relative;
+      transition: height 0.3s ease;
+    }
+
+    .options {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: brown;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+      z-index: 1;
+    }
+
+    .option {
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .option:hover {
+      background-color: #ddd;
+    }
+
+    .expanded .options {
+      display: block;
+    }
+  </style>
+
+  <!----------Start Script From Here---------->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const boxes = document.querySelectorAll('.box');
+
+      boxes.forEach(box => {
+        const options = box.querySelector('.options');
+
+        box.addEventListener('click', function () {
+         // Toggle the 'expanded' class to dynamically expand/collapse the box
+          this.classList.toggle('expanded');
+
+          // Hide options for other boxes when one is expanded
+          boxes.forEach(otherBox => {
+            if (otherBox !== this && otherBox.classList.contains('expanded')) {
+              otherBox.classList.remove('expanded');
+            }
+          });
+
+          // Hide options when clicking outside the box
+          document.addEventListener('click', function (event) {
+            if (!box.contains(event.target) && box.classList.contains('expanded')) {
+              box.classList.remove('expanded');
+            }
+          });
+
+          // Prevent the document click event from closing the box
+          box.addEventListener('click', function (event) {
+            event.stopPropagation();
+          });
+        });
+
+        // Handle color option click
+        const colorOptions = options.querySelectorAll('.color-option');
+        colorOptions.forEach(colorOption => {
+          colorOption.addEventListener('click', function () {
+            const color = this.getAttribute('data-color');
+            box.style.backgroundColor = color;
+
+            // Close options after selecting a color
+            box.classList.remove('expanded');
+          });
+        });
+
+        // Handle size option click
+        const sizeOptions = options.querySelectorAll('.size-option');
+        sizeOptions.forEach(sizeOption => {
+          sizeOption.addEventListener('click', function () {
+            const size = this.getAttribute('data-size');
+            box.style.height = size;
+
+            // Close options after selecting a size
+            box.classList.remove('expanded');
+          });
+        });
+      });
+    });
+  </script>
+  <!----------End Script From Here---------->
+</head>
+
+<body>
+  <div class="box">
+    Top Box
+    <div class="options">
+      <div class="option color-option" data-color="#3498db">Blue</div>
+      <div class="option color-option" data-color="#e74c3c">Red</div>
+      <div class="option color-option" data-color="#2ecc71">Green</div>
+      <div class="option size-option" data-size="80px">Size Small</div>
+      <div class="option size-option" data-size="100px">Size Medium</div>
+      <div class="option size-option" data-size="120px">Size Large</div>
+    </div>
+  </div>
+  
+  <div class="box">
+    Middle Box
+    <div class="options">
+      <div class="option color-option" data-color="#3498db">Blue</div>
+      <div class="option color-option" data-color="#e74c3c">Red</div>
+      <div class="option color-option" data-color="#2ecc71">Green</div>
+      <div class="option size-option" data-size="80px">Size Small</div>
+      <div class="option size-option" data-size="100px">Size Medium</div>
+      <div class="option size-option" data-size="120px">Size Large</div>
+    </div>
+  </div>
+
+  <div class="box">
+    Bottom Box
+    <div class="options">
+      <div class="option color-option" data-color="#3498db">Blue</div>
+      <div class="option color-option" data-color="#e74c3c">Red</div>
+      <div class="option color-option" data-color="#2ecc71">Green</div>
+      <div class="option size-option" data-size="80px">Size Small</div>
+      <div class="option size-option" data-size="100px">Size Medium</div>
+      <div class="option size-option" data-size="120px">Size Large</div>
+    </div>
+  </div>
+</body>
+</html>
